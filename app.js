@@ -71,11 +71,21 @@ const oneHour = 60*60*1000;
 const oneMinute = 60*1000;
 
 //calculate all values
+// Calculate the number of days remaining until the future date
 let days = t/oneDay;
+// Divides the remaining time t by the number of milliseconds in a day (oneDay). This provides the total number of remaining days.
+
+// Round down to ensure we have a whole number of days
 days = Math.floor(days)
+// Calculate the number of hours remaining after removing the already counted days
 let hours = Math.floor( (t%oneDay) / oneHour);
+// Calculate the number of minutes remaining after removing the already counted hours
+//Calculates the remainder of time after removing the days and then divides by the number of milliseconds in an hour (oneHour). This provides the number of remaining hours.
 let minutes = Math.floor((t%oneHour)/oneMinute);
+// Calculate the number of seconds remaining after removing the already counted minutes
+// Calculates the remainder of time after removing the hours and then divides by the number of milliseconds in a minute (oneMinute). This provides the number of remaining minutes.
 let seconds = Math.floor((t%oneMinute)/ 1000);
+//Calculates the remainder of time after removing the minutes and then divides by 1000 to convert to seconds. This provides the number of remaining seconds.
 
 // set values array;
 const values = [days, hours, minutes, seconds];
@@ -88,11 +98,16 @@ function format (item){
   return item
 }
 
+// Update the HTML content of each element in the items NodeList with the formatted time values
 items.forEach(function(item, index){
   item.innerHTML = format(values[index]);
 });
+
+// Check if the remaining time (t) has reached zero or negative
 if (t < 0) {
+  // If the time has expired, clear the countdown interval to stop further updates
   clearInterval(countdown);
+  // Update the HTML content of the deadline element to display an expired message
   deadline.innerHTML = `<h4 class='expired'>sorry, this giveaway has
    expired</h4>`;
 }
